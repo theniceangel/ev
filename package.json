@@ -1,0 +1,23 @@
+{
+  "name": "ev",
+  "version": "1.0.0",
+  "description": "xskr's editor and viewer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xskr/ev.git"
+  },
+  "keywords": [
+    "editor",
+    "viewer"
+  ],
+  "author": "tlw_ray@163.com",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/xskr/ev/issues"
+  },
+  "homepage": "https://github.com/xskr/ev#readme"
+}
