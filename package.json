@@ -15,9 +15,24 @@
     "viewer"
   ],
   "author": "tlw_ray@163.com",
-  "license": "GPL",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/xskr/ev/issues"
   },
-  "homepage": "https://github.com/xskr/ev#readme"
+  "homepage": "https://github.com/xskr/ev#readme",
+  "dependencies": {
+    "codemirror": "^5.48.2",
+    "dagre": "^0.8.4",
+    "dagre-d3": "^0.6.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "generic-pool": "^3.7.1",
+    "graphlib-dot": "^0.6.2",
+    "highlight": "^0.2.4",
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.15",
+    "mysql": "^2.17.1",
+    "ramda": "^0.26.1",
+    "xregexp": "^4.2.4"
+  }
 }
