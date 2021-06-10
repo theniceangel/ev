@@ -80,9 +80,9 @@ function jsonExample() {
 
 
     // ----------------- parser -----------------
-    const Parser = chevrotain.Parser;
+    const EmbeddedActionsParser = chevrotain.EmbeddedActionsParser;
 
-    class JsonParser extends Parser {
+    class JsonParser extends EmbeddedActionsParser {
         constructor() {
             super(jsonTokens, {recoveryEnabled: true, outputCst: false})
 
@@ -226,9 +226,9 @@ function jsonGrammarOnlyExample() {
 
 
     // ----------------- parser -----------------
-    const Parser = chevrotain.Parser;
+    const CstParser = chevrotain.CstParser;
 
-    class JsonParser extends Parser {
+    class JsonParser extends CstParser {
         constructor() {
             super(jsonTokens, {
                 recoveryEnabled: true
@@ -457,9 +457,9 @@ function cssExample() {
     });
 
     // ----------------- parser -----------------
-    const Parser = chevrotain.Parser;
+    const CstParser = chevrotain.CstParser;
 
-    class CssParser extends Parser {
+    class CssParser extends CstParser {
         constructor() {
             super(cssTokens, {
                 recoveryEnabled: true,
@@ -802,12 +802,13 @@ function cssExample() {
     };
 }
 
+
 function calculatorExample() {
     // ----------------- lexer -----------------
     const createToken = chevrotain.createToken;
     const tokenMatcher = chevrotain.tokenMatcher;
     const Lexer = chevrotain.Lexer;
-    const Parser = chevrotain.Parser;
+    const EmbeddedActionsParser = chevrotain.EmbeddedActionsParser;
 
     // using the NA pattern marks this Token class as 'irrelevant' for the Lexer.
     // AdditionOperator defines a Tokens hierarchy but only leafs in this hierarchy
@@ -841,9 +842,9 @@ function calculatorExample() {
     const CalculatorLexer = new Lexer(allTokens);
 
 
-    class Calculator extends Parser {
+    class Calculator extends EmbeddedActionsParser {
         constructor() {
-            super(allTokens, {outputCst : false});
+            super(allTokens);
 
             const $ = this;
 
@@ -965,12 +966,12 @@ function calculatorExampleCst() {
      * of chevrotain.
      *
      * See farther details here:
-     * https://github.com/SAP/chevrotain/blob/master/docs/concrete_syntax_tree.md
+     * https://chevrotain.io/docs/guide/concrete_syntax_tree.html
      */
     const createToken = chevrotain.createToken;
     const tokenMatcher = chevrotain.tokenMatcher;
     const Lexer = chevrotain.Lexer;
-    const Parser = chevrotain.Parser;
+    const CstParser = chevrotain.CstParser;
 
     // using the NA pattern marks this Token class as 'irrelevant' for the Lexer.
     // AdditionOperator defines a Tokens hierarchy but only the leafs in this hierarchy define
@@ -1004,7 +1005,7 @@ function calculatorExampleCst() {
     // ----------------- parser -----------------
     // Note that this is a Pure grammar, it only describes the grammar
     // Not any actions (semantics) to perform during parsing.
-    class CalculatorPure extends Parser {
+    class CalculatorPure extends CstParser {
         constructor() {
             super(allTokens);
 
@@ -1169,95 +1170,95 @@ function calculatorExampleCst() {
 
 var samples = {
 
-    "JSON语法CST输出": {
+    "JSON grammar and CST output": {
         implementation: jsonGrammarOnlyExample,
         sampleInputs: {
-            '正常': '{' +
-                         '\n\t"firstName": "John",' +
-                         '\n\t"lastName": "Smith",' +
-                         '\n\t"isAlive": true,' +
-                         '\n\t"age": 25' +
-                         '\n}',
+            'valid': '{' +
+            '\n\t"firstName": "John",' +
+            '\n\t"lastName": "Smith",' +
+            '\n\t"isAlive": true,' +
+            '\n\t"age": 25' +
+            '\n}',
 
-            '缺少冒号': '{' +
-                                  '\n\t"look" "mom",' +
-                                  '\n\t"no" "colons",' +
-                                  '\n\t"!" "success!",' +
-                                  '\n}',
+            'missing colons': '{' +
+            '\n\t"look" "mom",' +
+            '\n\t"no" "colons",' +
+            '\n\t"!" "success!",' +
+            '\n}',
 
-            '缺少值': '{' +
-                                 '\n\t"the": "dog",' +
-                                 '\n\t"ate": "my",' +
-                                 '\n\t"will be lost in recovery":,' +
-                                 '\n\t"value": "success!"' +
-                                 '\n}',
+            'missing value': '{' +
+            '\n\t"the": "dog",' +
+            '\n\t"ate": "my",' +
+            '\n\t"will be lost in recovery":,' +
+            '\n\t"value": "success!"' +
+            '\n}',
 
-            '多余逗号': '{' +
-                                   '\n\t"three commas" : 3,,,' +
-                                   '\n\t"five commas": 5,,,,,' +
-                                   '\n\t"!" : "success"' +
-                                   '\n}',
+            'too many commas': '{' +
+            '\n\t"three commas" : 3,,,' +
+            '\n\t"five commas": 5,,,,,' +
+            '\n\t"!" : "success"' +
+            '\n}',
 
-            '缺少逗号': '{' +
-                                 '\n\t"missing ": "comma->" ' +
-                                 '\n\t"I will be lost in": "recovery", ' +
-                                 '\n\t"but I am still": "here",' +
-                                 '\n\t"partial success": "only one property lost"' +
-                                 '\n}',
+            'missing comma': '{' +
+            '\n\t"missing ": "comma->" ' +
+            '\n\t"I will be lost in": "recovery", ' +
+            '\n\t"but I am still": "here",' +
+            '\n\t"partial success": "only one property lost"' +
+            '\n}',
 
-            '数组中缺少逗号': '{' +
-                                          '\n\t"name" : "Bobby",' +
-                                          '\n\t"children ages" : [1, 2 3, 4],' +
-                                          '\n\t"partial success": "only one array element lost"' +
-                                          '\n}'
+            'missing comma in array': '{' +
+            '\n\t"name" : "Bobby",' +
+            '\n\t"children ages" : [1, 2 3, 4],' +
+            '\n\t"partial success": "only one array element lost"' +
+            '\n}'
         }
     },
 
-    "JSON语法和嵌入式语义": {
+    "JSON grammar and embedded semantics": {
         implementation: jsonExample,
         sampleInputs: {
-            '正常': '{' +
-                         '\n\t"firstName": "John",' +
-                         '\n\t"lastName": "Smith",' +
-                         '\n\t"isAlive": true,' +
-                         '\n\t"age": 25' +
-                         '\n}',
+            'valid': '{' +
+            '\n\t"firstName": "John",' +
+            '\n\t"lastName": "Smith",' +
+            '\n\t"isAlive": true,' +
+            '\n\t"age": 25' +
+            '\n}',
 
-            '缺少冒号': '{' +
-                                  '\n\t"look" "mom",' +
-                                  '\n\t"no" "colons",' +
-                                  '\n\t"!" "success!",' +
-                                  '\n}',
+            'missing colons': '{' +
+            '\n\t"look" "mom",' +
+            '\n\t"no" "colons",' +
+            '\n\t"!" "success!",' +
+            '\n}',
 
-            '缺少值': '{' +
-                                 '\n\t"the": "dog",' +
-                                 '\n\t"ate": "my",' +
-                                 '\n\t"will be lost in recovery":,' +
-                                 '\n\t"value": "success!"' +
-                                 '\n}',
+            'missing value': '{' +
+            '\n\t"the": "dog",' +
+            '\n\t"ate": "my",' +
+            '\n\t"will be lost in recovery":,' +
+            '\n\t"value": "success!"' +
+            '\n}',
 
-            '多余逗号': '{' +
-                                   '\n\t"three commas" : 3,,,' +
-                                   '\n\t"five commas": 5,,,,,' +
-                                   '\n\t"!" : "success"' +
-                                   '\n}',
+            'too many commas': '{' +
+            '\n\t"three commas" : 3,,,' +
+            '\n\t"five commas": 5,,,,,' +
+            '\n\t"!" : "success"' +
+            '\n}',
 
-            '缺少逗号': '{' +
-                                 '\n\t"missing ": "comma->" ' +
-                                 '\n\t"I will be lost in": "recovery", ' +
-                                 '\n\t"but I am still": "here",' +
-                                 '\n\t"partial success": "only one property lost"' +
-                                 '\n}',
+            'missing comma': '{' +
+            '\n\t"missing ": "comma->" ' +
+            '\n\t"I will be lost in": "recovery", ' +
+            '\n\t"but I am still": "here",' +
+            '\n\t"partial success": "only one property lost"' +
+            '\n}',
 
-            '数组中缺少逗号': '{' +
-                                          '\n\t"name" : "Bobby",' +
-                                          '\n\t"children ages" : [1, 2 3, 4],' +
-                                          '\n\t"partial success": "only one array element lost"' +
-                                          '\n}'
+            'missing comma in array': '{' +
+            '\n\t"name" : "Bobby",' +
+            '\n\t"children ages" : [1, 2 3, 4],' +
+            '\n\t"partial success": "only one array element lost"' +
+            '\n}'
         }
     },
 
-    "运算符分离语义": {
+    "Calculator separated semantics": {
         implementation: calculatorExampleCst,
         sampleInputs: {
             "parenthesis precedence": "2 * ( 3 + 7)",
@@ -1267,7 +1268,7 @@ var samples = {
         }
     },
 
-    "运算符嵌入语义": {
+    "Calculator embedded semantics": {
         implementation: calculatorExample,
         sampleInputs: {
             "parenthesis precedence": "2 * ( 3 + 7)",
@@ -1277,17 +1278,17 @@ var samples = {
         }
     },
 
-    "CSS语法": {
+    "CSS Grammar": {
         implementation: cssExample,
         sampleInputs: {
             simpleCss: "@charset \"UTF-8\";\r\n\/* CSS Document *\/\r\n\r\n\/** Structure *\/\r\nbody" +
-                           " {\r\n  font-family: Arial, sans-serif;\r\n  margin: 0;\r\n  font-size: 14px;\r\n}\r\n\r\n#system-error" +
-                           " {\r\n  font-size: 1.5em;\r\n  text-align: center;\r\n}",
+            " {\r\n  font-family: Arial, sans-serif;\r\n  margin: 0;\r\n  font-size: 14px;\r\n}\r\n\r\n#system-error" +
+            " {\r\n  font-size: 1.5em;\r\n  text-align: center;\r\n}",
 
 
             "won't stop on first error": "@charset \"UTF-8\";\r\n\/* CSS Document *\/\r\n\r\n\/** Structure *\/\r\nbody" +
-                                             " {\r\n  font-family Arial, sans-serif;\r\n  margin: 0;\r\n  font-size: 14px;\r\n}\r\n\r\n#system-error" +
-                                             " {\r\n  font-size 1.5em;\r\n  text-align: center;\r\n}"
+            " {\r\n  font-family Arial, sans-serif;\r\n  margin: 0;\r\n  font-size: 14px;\r\n}\r\n\r\n#system-error" +
+            " {\r\n  font-size 1.5em;\r\n  text-align: center;\r\n}"
         }
     }
 }
