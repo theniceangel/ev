@@ -7,20 +7,20 @@
           type="image/jpeg"
           href="../photos/chevrotain.jpg">
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/chevrotain/diagrams/diagrams.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS/diagrams.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="CSS/gh-fork-ribbon.css">
-    <link rel="stylesheet" href="bower_components/CodeMirror/lib/codemirror.css">
+    <link rel="stylesheet" href="lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="CSS/playground.css">
 
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="libs/jquery.svg.js"></script>
-    <script src="libs/jquery.svgdom.js"></script>
-    <script src="https://unpkg.com/chevrotain/lib/chevrotain.js"></script>
-    <script src="bower_components/CodeMirror/lib/codemirror.js"></script>
-    <script src="bower_components/CodeMirror/mode/javascript/javascript.js"></script>
-    <script src="bower_components/xregexp/xregexp-all.js"></script>
+    <script src="lib/lodash.js"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.svg.js"></script>
+    <script src="lib/jquery.svgdom.js"></script>
+    <script src="chevrotain.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <script src="lib/javascript/javascript.js"></script>
+    <script src="lib/xregexp-all.js"></script>
 
     <script src="utils.js"></script>
     <script src="editors.js"></script>
@@ -30,9 +30,9 @@
     <script src="editorHighlights.js"></script>
     <script src="layout.js"></script>
 
-    <script src="https://unpkg.com/chevrotain/diagrams/vendor/railroad-diagrams.js"></script>
-    <script src="https://unpkg.com/chevrotain/diagrams/src/diagrams_builder.js"></script>
-    <script src="https://unpkg.com/chevrotain/diagrams/src/diagrams_behavior.js"></script>
+    <script src="railroad-diagrams.js"></script>
+    <script src="diagrams_builder.js"></script>
+    <script src="diagrams_behavior.js"></script>
 
     <title>数据架构(DataSchema)</title>
 </head>
@@ -100,7 +100,7 @@
 
     <div id="output" class="card" style="width: 100%; overflow: hidden; height: 21vh">
         <div class="boxHeader">
-            <h1>输出</h1>
+            <h1>输出11</h1>
         </div>
         <label for="parserOutput"></label>
         <textarea id="parserOutput"></textarea>
@@ -108,6 +108,7 @@
 </div>
 
 <script>
+
 
     // global state
     var lexer = null
@@ -184,7 +185,7 @@
             loadExample(urlParamExample, true)
         }
         else {
-            loadExample("JSON语法CST输出", true)
+            loadExample("JSON grammar and CST output", true)
         }
         updateSamplesDropDown()
 
